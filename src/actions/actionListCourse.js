@@ -24,14 +24,18 @@ export function getDataFailure() {
   };
 }
 
-export function fetchDatasWithRedux(){
+export function fetchDatasWithRedux() {
   return function(dispatch) {
     dispatch(getData());
-    return axios.get("https://jsonplaceholder.typicode.com/posts")
-    .then(response => {
-      let getThreeItems = response.data;
-      dispatch(getDataSuccess(getThreeItems));
+    return axios({
+      method: 'get',
+      url: 'https://jsonplaceholder.typicode.com/posts',
+      responseType: 'json',
     })
-    .catch(response => dispatch(getDataFailure()));
-  }
+      .then(response => {
+        let getThreeItems = response.data;
+        dispatch(getDataSuccess(getThreeItems));
+      })
+      .catch(response => dispatch(getDataFailure()));
+  };
 }

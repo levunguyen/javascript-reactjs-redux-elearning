@@ -1,7 +1,5 @@
-.Grid {
-  width: calc(100% + 2px);
-  margin: -6px
-}
+.List {
+  width: 98%; }
 
 .paper {
   padding: 16;

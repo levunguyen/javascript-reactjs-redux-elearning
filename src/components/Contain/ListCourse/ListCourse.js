@@ -17,12 +17,12 @@ class ListCourse extends Component {
 
   render() {
     return (
-      <div className="root">
+      <div className="List">
         <Grid container spacing={24}>
           {this.props.data &&
             this.props.data.map((card, index) => {
               return <Grid key={card.id} item xs={3}>
-                        <Card className="card">
+                      <Card className="card">
                                     {/* <CardMedia
                                         className='media'
                                         image='http://www.liveanimalslist.com/reptiles/images/lizard-eye-view.jpg'
