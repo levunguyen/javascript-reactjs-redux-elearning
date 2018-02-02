@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import chapters from './chapters';
+import dataReducer from './dataReducer';
 
 const myReducer = combineReducers({
-  chapters //chapters:chapters
+  chapters, dataReducer
 })
 
 export default myReducer;
