@@ -29,7 +29,7 @@ export function fetchDatasWithRedux() {
     dispatch(getData());
     return axios({
       method: 'get',
-      url: 'https://jsonplaceholder.typicode.com/posts',
+      url: 'http://10.10.1.65:8080/api-1.0/api/courses',
       responseType: 'json',
     })
       .then(response => {

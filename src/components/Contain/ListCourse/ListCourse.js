@@ -31,10 +31,10 @@ class ListCourse extends Component {
                                     <CardContent>
                                         <Typography type="headline" component="h2">
                                             {card.id}
-                                            {card.title}
+                                            {card.courseName}
                                         </Typography>
                                         <Typography component="p">
-                                            {card.body}
+                                            {card.description}
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
