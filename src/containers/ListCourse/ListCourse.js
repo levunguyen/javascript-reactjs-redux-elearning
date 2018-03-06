@@ -16,7 +16,7 @@ class ListCourse extends Component {
   }
   render() {
     return (
-      <div className="root">
+      <div>
         <Grid container spacing={24}>
           {this.props.courses.map((course, index) => {
             return (
