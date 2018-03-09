@@ -5,7 +5,6 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import configureStore from './configureStore';
-
 const theme = createMuiTheme();
 const store = configureStore();
 
