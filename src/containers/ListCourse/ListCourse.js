@@ -16,8 +16,8 @@ class ListCourse extends Component {
     super(props);
     this.handleOnScroll = this.handleOnScroll.bind(this);
     this.state = {
-      loading: false
-    };
+      loading: false,
+    }
   }
 
   loadEventBrowserBack() {
@@ -33,12 +33,13 @@ class ListCourse extends Component {
     // console.log(i);
 
     this.loadEventBrowserBack();
-    window.addEventListener("scroll", this.handleOnScroll);
+    window.addEventListener('scroll', this.handleOnScroll);
   }
 
   componentWillUnmount() {
     // this.props.resetData();
-    window.removeEventListener("scroll", this.handleOnScroll);
+    window.removeEventListener('scroll', this.handleOnScroll);
+
   }
 
   async fetchDatasFromIndexPage() {
@@ -47,7 +48,7 @@ class ListCourse extends Component {
 
   increaseIndexPage = () => {
     this.props.increasePage();
-  };
+  }
 
   // changeValueIsLoading = () => {
   //   let {dispatch} = this.props;
@@ -55,26 +56,24 @@ class ListCourse extends Component {
   // }
 
   async handleOnScroll() {
-    var scrollTop =
-      (document.documentElement && document.documentElement.scrollTop) ||
-      document.body.scrollTop;
-    var scrollHeight =
-      (document.documentElement && document.documentElement.scrollHeight) ||
-      document.body.scrollHeight;
-    var clientHeight =
-      document.documentElement.clientHeight || window.innerHeight;
+    var scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+    var scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+    var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     var scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
     if (scrolledToBottom) {
       if (this.props.canLoad && !this.props.isLoading) {
         this.increaseIndexPage();
         this.props.changeValueLoading(true);
         await this.fetchDatasFromIndexPage();
+
       }
     }
   }
+  
   render() {
     return (
       <div>
+        {/* <div className="data-container"> */}
         <Grid container spacing={24}>
           {this.props.courses.map((course, index) => {
             return (
@@ -146,6 +145,7 @@ class ListCourse extends Component {
                   </CardActions>
                 </Card>
               </Grid>
+            
             );
           })}
         </Grid>
@@ -153,11 +153,13 @@ class ListCourse extends Component {
           if (this.props.isLoading && this.props.canLoad) {
             return (
               <div className="data-loading">
-                <i className="fa fa-refresh fa-spin" />
+                <i className="fa fa-refresh fa-spin"></i>
               </div>
             );
           } else {
-            return <div className="data-loading" />;
+            return (
+              <div className="data-loading"></div>
+            );
           }
         })()}
       </div>
@@ -174,7 +176,7 @@ const mapStateToProps = state => {
     rating: state.dataReducer.rating,
     indexPage: state.dataReducer.indexPage,
     canLoad: state.dataReducer.canLoad,
-    isLoading: state.dataReducer.isLoading
+    isLoading: state.dataReducer.isLoading,
     // states:{
     //   courses: state.dataReducer.data,
     //   rating: state.dataReducer.rating,
@@ -187,16 +189,16 @@ const mapDispatchToProps = (dispatch, props) => {
     getRating: rating => {
       dispatch(actionListCourse.getRating(rating));
     },
-    fetchDatasIndexPage: indexPage => {
-      dispatch(actionListCourse.fetchDatasIndexPage(indexPage));
+    fetchDatasIndexPage: (indexPage) => {
+      dispatch(actionListCourse.fetchDatasIndexPage(indexPage))
     },
     increasePage: () => {
-      dispatch(actionListCourse.increasePage());
+      dispatch(actionListCourse.increasePage())
     },
     resetData: () => {
       dispatch(actionListCourse.resetData());
     },
-    changeValueLoading: isLoading => {
+    changeValueLoading: (isLoading) => {
       dispatch(actionListCourse.changeValueIsLoading(isLoading));
     }
   };
