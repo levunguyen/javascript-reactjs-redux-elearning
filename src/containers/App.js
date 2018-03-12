@@ -6,11 +6,26 @@ import { Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import Wrapper from '../Hoc/Hoc';
 import Radium from 'radium';
+import { connect } from 'react-redux';
 import CourseDatail from '../containers/CourseDetail/CourseDetail';
 import ListCourse from '../containers/ListCourse/ListCourse';
-
+import { checkAuthAction } from '../actions/authAction/authAction';
 const theme = createMuiTheme();
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.checkAuth = this.checkAuth.bind(this);
+  }
+
+  componentWillMount() {
+    this.checkAuth();
+  }
+
+  checkAuth = () => {
+    this.props.checkAuth();
+  }
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>
@@ -31,5 +46,16 @@ class App extends Component {
     );
   }
 }
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    checkAuth: () => {
+      dispatch(checkAuthAction());
+    },
+  };
+}
 
-export default Radium(App);
+const mapStateToProps = (state) => {
+  return {};
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Radium(App));

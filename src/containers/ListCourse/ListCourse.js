@@ -167,11 +167,6 @@ const mapStateToProps = state => {
     indexPage: state.dataReducer.indexPage,
     canLoad: state.dataReducer.canLoad,
     isLoading: state.dataReducer.isLoading,
-    // states:{
-    //   courses: state.dataReducer.data,
-    //   rating: state.dataReducer.rating,
-    //   indexPage : state.dataReducer.indexPage,
-    // }
   };
 };
 const mapDispatchToProps = (dispatch, props) => {

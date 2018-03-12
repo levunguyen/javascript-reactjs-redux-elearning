@@ -58,7 +58,7 @@ export function fetchDatasIndexPage(indexPage) {
    return  function(dispatch) {
     return axios({
       method: 'get',
-      url: 'http://localhost:8080/api/courses/page/'+indexPage,
+      url: 'http://10.10.1.65:8080/api-1.1/api/courses/page/'+indexPage,
       response: 'json',
     })
       .then(response => {
