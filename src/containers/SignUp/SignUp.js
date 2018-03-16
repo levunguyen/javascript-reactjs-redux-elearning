@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 import './SignUp.css';
 import face from '../../Asset/facebook.png';
 import google from '../../Asset/google.png';
@@ -12,19 +13,35 @@ class SignUp extends Component {
     super(props);
 
     this.state = {
+      checkmail: false,
       // confirm: true,
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(){
-    alert("First name: "+ this.refs.firstname.value+ "Last name: "+ this.refs.lastname.value
-           + "Email: "+ this.refs.email.value+ "Password: "+ this.refs.password.value+"sex: "+this.refs.sex.value);
+  
+  
+  handleSubmit = (event) => {
+    event.preventDefault();
+    let axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          "Access-Control-Allow-Origin": "*",
+      }
+    };
+    const data = {
+        // userFirstName: this.refs.firstname.value,
+        // userLastName: this.refs.lastname.value,
+        userEmail: this.email.value,
+        userPassword: this.password.value
+    }
+    console.log(data);
+    axios.post('/user',data,axiosConfig);
   }
-  handleClear = () => { 
-    this.myFormRef.reset();
-  }
-
   checkpass = ( ) =>{
       if(this.password.value === this.confirmpassword.value){
           this.message.style.color = 'green';
@@ -39,48 +56,60 @@ class SignUp extends Component {
         // })
       }
   }
+  checkmail = () =>{
+      let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      if(reg.test(this.email.value)){
+        this.checkmail.style.color = 'green';
+      }else{
+        this.checkmail.style.color = 'red';
+      }
+  }
   render() {
     return (
       <div className="container">
+      <section className="access">
         <div className="title">
           <h1>Create your student account</h1><br/>
-          <p>Your student account is your portal to all things E-LEARNING: your classroom, projects, forums, career resources, and more!</p>
+          {/* <p>Your student account is your portal to all things E-LEARNING: your classroom, projects, forums, career resources, and more!</p> */}
         </div>
-        <form className="needs-validation" ref={(el) => this.myFormRef = el} novalidate>
-          <div className="form-row">
+        <form onSubmit={(event) => this.handleSubmit(event)}
+          className="needs-validation" ref={(el) => this.myFormRef = el} noValidate>
+          {/* <div className="form-row">
             <div className="col-md-6 mb-3">
-              <input type="text" className="form-control" ref="firstname" id="validationCustom01" placeholder="First Name" required />
+              <input type="text" className="form-control" ref="firstname" name="firstname" 
+              id="validationCustom01" placeholder="First Name" required/>
               <div className="invalid-feedback">
                 Please provide your first name.
               </div>
             </div>
             <div className="col-md-6 mb-3">
-              <input type="text" className="form-control" ref="lastname" id="validationCustom02"  placeholder="Last Name" required />
+              <input type="text" className="form-control" ref="lastname" name="lastname"
+              id="validationCustom02"  placeholder="Last Name" required />
               <div className="invalid-feedback">
                 Please provide your last name.
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="form-row">
-            <div className="col-md-12 mb-3">
-              <input type="email" ref="email" className="form-control" id="validationCustom03" placeholder="Email" required />
-              <div className="invalid-feedback">
-                Please provide a Email.
-              </div>
+            <div className="col-md-10 mb-3">
+              <input type="email" ref={(el) => this.email = el} className="form-control" 
+              name="email" onKeyUp={this.checkmail}
+              id="validationCustom03" placeholder="Email" required />
+            </div>
+            <div className="col-md-2 mb-3">
+              <i className="fa fa-check" ref={(el) => this.checkmail = el}/>
             </div>
           </div>
           <div className="form-row">
             <div className="col-md-5 mb-3">
-              <input type="password" ref={(el) => this.password = el} onKeyUp={this.checkpass} className="form-control" id="validationCustom04" placeholder="Password" required />
-              <div className="invalid-feedback">
-                Please provide a Password.
-              </div>
+              <input type="password" ref={(el) => this.password = el} onKeyUp={this.checkpass} 
+              className="form-control" name="password"
+              id="validationCustom04" placeholder="Password" required />
             </div>
             <div className="col-md-5 mb-3">
-              <input type="password" ref={(el) => this.confirmpassword = el} onKeyUp={this.checkpass} className="form-control" id="validationCustom05" placeholder="Confirm Password" required />
-              <div className="invalid-feedback">
-                Please provide a Confirm Password.
-              </div>
+              <input type="password" ref={(el) => this.confirmpassword = el} onKeyUp={this.checkpass} 
+              className="form-control" name="confirmpassword"
+              id="validationCustom05" placeholder="Confirm Password" required />
             </div>
             <div className="col-md-2 mb-3">
               <i className="fa fa-check" ref={(el) => this.message = el}/>
@@ -95,21 +124,16 @@ class SignUp extends Component {
                   <label className="form-check-label" htmlFor="invalidCheck">
                     Agree to terms and conditions
                   </label>
-                  <div className="invalid-feedback">
-                    You must agree before submitting.
-                  </div>
               </div>
             </div>
           </div>
           <div className="form-row">
-            <div className="col-md-6 mb-3">
+            <div className="col-md-12 mb-3">
               <button className="btn btn-light button" type="submit" >SIGN UP</button>   
-            </div>
-            <div className="col-md-6 mb-3">
-              <button className="btn btn-light button " type="button" onClick={this.handleClear}>CLEAR VALUE</button>         
             </div>
           </div>           
         </form>
+        </section> 
         <hr/>
         <p>or sign up with one of these services</p>
         <div className="form-row">
@@ -123,7 +147,7 @@ class SignUp extends Component {
                 <img src={google} alt="" className="img" />
               </a>
             </div>
-        </div>   
+        </div>       
       </div>
     );
   }
