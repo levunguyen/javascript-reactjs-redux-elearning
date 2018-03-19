@@ -1,5 +1,9 @@
 export {
-    fetchCourses
+    fetchCourses,
+    changeValueIsLoading,
+    fetchDatasIndexPage,
+    increasePage,
+    resetData,
 } from './courses';
 
 export {

@@ -7,7 +7,10 @@ const initialState = {
         directories: ['Home', 'Courses']
     },
     cartAmount: '1',
-    courses: []
+    courses: [],
+    indexPage: -1,
+    canLoad: true,
+    isLoading: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -21,13 +24,33 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 // loading: false,
-                courses: action.courses
+                courses: [...state.courses, ...action.courses]
             };
         case actionTypes.FETCH_COURSES_FAIL:
             return {
                 ...state,
                 // loading: true
             };
+        case actionTypes.STOP_LOADING_COURSES:
+            return {
+                ...state,
+                canLoad: false
+            };
+        case actionTypes.INCREASE_INDEX_PAGE:
+            return {
+                ...state,
+                indexPage: state.indexPage + 1
+            };
+        case actionTypes.IS_LOADING_COURSES:
+            return { 
+                ...state, 
+                isLoading: action.isLoading 
+            };
+        case actionTypes.RESET_DATA_COURSES:
+            return {
+                ...state,
+                courses: [],
+            }
         default:
             return state;
     }

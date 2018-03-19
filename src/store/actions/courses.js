@@ -21,6 +21,32 @@ export const fetchCoursesFail = (error) => {
     }
 }
 
+export function loadingData(isLoading){
+    return {
+      type : actionTypes.IS_LOADING_COURSES,
+      isLoading
+    }
+}
+
+export function clearData(){
+    return {
+      type : actionTypes.RESET_DATA_COURSES,
+    }
+}
+
+export function stopLoad() {
+    return {
+      type: actionTypes.STOP_LOADING_COURSES,
+    };
+  }
+  
+  
+  export function increaseIndexPage() {
+    return {
+      type: actionTypes.INCREASE_INDEX_PAGE,
+    };
+  }
+
 export const fetchCourses = () => {
     return dispatch => {
         dispatch(fetchCoursesStart());
@@ -33,3 +59,37 @@ export const fetchCourses = () => {
             })
     }
 }
+
+export function fetchDatasIndexPage(indexPage) {
+    return  function(dispatch) {
+     return axios('/page/'+indexPage)
+       .then(response => {
+         let data = response.data;
+         if(data.length === 0){
+           dispatch(stopLoad());  
+         }else{
+           dispatch(fetchCoursesSuccess(data));
+           dispatch(loadingData(false));
+         }
+       })
+       .catch(error => dispatch(fetchCoursesFail(error)));
+   };
+ }
+ 
+ export function increasePage () {
+   return function(dispatch){
+     dispatch(increaseIndexPage());
+   }
+ }
+ 
+ export function resetData(){
+   return function(dispatch){
+     dispatch(clearData());
+   }
+ }
+ 
+ export function changeValueIsLoading(isLoading){
+   return function(dispatch){
+     dispatch(loadingData(isLoading));
+   }
+ }
